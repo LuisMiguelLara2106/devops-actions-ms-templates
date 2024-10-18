@@ -4,13 +4,13 @@ on:
   workflow_call:
     inputs:
       language_package_manager:
-        required: true
+        required: false
         description: "language pakage manager"
         type: string
 
       language_version:
         description: "language version"
-        required: true
+        required: false
         type: string
 
 jobs:
