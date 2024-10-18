@@ -1,0 +1,38 @@
+name: Microservice Template
+
+on:
+  workflow_call:
+    inputs:
+      language_package_manager:
+        required: true
+        description: "language pakage manager"
+        type: string
+
+      language_version:
+        description: "language version"
+        required: true
+        type: string
+
+jobs:
+  microservice-template:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "Git chekcout 📥"
+        uses: actions/checkout@v4
+          
+      - name: "Build App 🏗️"
+        if: inputs.language_version != '' && inputs.language_package_manager != ''
+        uses: segurosbolivar/devops-composite-actions/build/interface@master
+        with:
+          language_version: ${{inputs.language_version}}
+          language_package_manager: ${{inputs.language_package_manager}}
+
+      - name: "Unit Test App 🧪"
+        uses: segurosbolivar/devops-composite-actions/unit-test/interface@master
+        with:
+          language_version: ${{inputs.language_version}}
+          language_package_manager: ${{inputs.language_package_manager}}
